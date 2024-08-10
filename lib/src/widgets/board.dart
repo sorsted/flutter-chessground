@@ -383,7 +383,8 @@ class _BoardState extends State<Chessboard> {
       _promotionMove = null;
       if (widget.onPremove != null &&
           widget.state.premove != null &&
-          widget.state.sideToMove?.name == widget.state.interactableSide.name) {
+          (widget.state.interactableSide == InteractableSide.both ||
+              widget.state.sideToMove?.name == widget.state.interactableSide.name)) {
         Timer.run(() {
           if (mounted) _tryPlayPremove();
         });
@@ -815,7 +816,8 @@ class _BoardState extends State<Chessboard> {
   bool _isPremovable(Piece? piece) {
     return piece != null &&
         (widget.onPremove != null &&
-            widget.state.interactableSide.name == piece.color.name &&
+            (widget.state.interactableSide == InteractableSide.both ||
+                widget.state.interactableSide.name == piece.color.name) &&
             widget.state.sideToMove != piece.color);
   }
 
